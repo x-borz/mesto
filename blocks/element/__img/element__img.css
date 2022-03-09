@@ -1,0 +1,5 @@
+.element__img {
+  grid-area: img;
+  width: 100%;
+  object-fit: cover;
+}
