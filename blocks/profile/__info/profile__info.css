@@ -1,0 +1,9 @@
+.profile__info {
+  margin: 0 auto 0 30px;
+  display: grid;
+  grid-template-areas: "name button"
+                       "about about";
+  grid-template-columns: auto 1fr;
+  column-gap: 18px;
+  align-self: flex-start;
+}
