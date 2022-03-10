@@ -1,9 +1,12 @@
 .element__like-button {
+  grid-area: like;
+  justify-self: center;
   width: 22px;
   height: 19px;
+  border: none;
+  background-color: transparent;
   background-repeat: no-repeat;
   background-size: cover;
-  justify-self: center;
   background-image: url("../../../images/like-disabled-icon.svg");
   opacity: 1;
   transition: opacity .25s linear;
