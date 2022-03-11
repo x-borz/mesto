@@ -11,3 +11,18 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+@media screen and (max-width: 929px) {
+  .profile__job {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 635px) {
+  .profile__job {
+    margin: 6px 0 0 0;
+    font-size: 14px;
+    line-height: 1.21;
+    text-align: center;
+  }
+}
