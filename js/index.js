@@ -20,12 +20,8 @@ function closePopup() {
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
-
-  let nameValue = nameInput.value;
-  let jobValue = jobInput.value;
-  profileNameElement.textContent = nameValue;
-  profileJobElement.textContent = jobValue;
-
+  profileNameElement.textContent = nameInput.value;
+  profileJobElement.textContent = jobInput.value;
   closePopup();
 }
 
