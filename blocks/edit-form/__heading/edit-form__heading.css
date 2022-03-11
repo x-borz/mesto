@@ -7,3 +7,9 @@
   line-height: 1.21;
   color: #000;
 }
+
+@media screen and (max-width: 635px) {
+  .edit-form__heading {
+    font-size: 18px;
+  }
+}
