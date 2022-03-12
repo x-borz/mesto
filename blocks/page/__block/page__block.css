@@ -1,9 +1,9 @@
-.page__content {
+.page__block {
   margin: 0 auto;
 }
 
 @media screen and (max-width: 929px) {
-  .page__content {
+  .page__block {
     margin: 0 19px;
   }
 }
