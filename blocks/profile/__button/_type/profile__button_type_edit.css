@@ -1,0 +1,18 @@
+.profile__button_type_edit {
+  grid-area: button;
+  margin: 37px 0 0 0;
+  border: 1px solid #fff;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../../../images/edit-icon.svg");
+  background-size: 10px 10px;
+}
+
+@media screen and (max-width: 635px) {
+  .profile__button_type_edit {
+    margin: 33px 0 0 0;
+    width: 18px;
+    height: 18px;
+    background-size: 8px 8px;
+  }
+}
