@@ -1,3 +1,4 @@
+//1. Загрузка 6 карточек
 const initialCards = [
   {
     name: 'Москва',
@@ -30,6 +31,54 @@ const cardTemplate = document.querySelector('#card').content;
 
 initialCards.forEach(item => cardsList.append(createCardElement(item.name, item.link)));
 
+//2. Манипуляции с попапом редактирования профиля
+const profilePopup = document.querySelector('.popup_type_profile');
+const profileFormElement = profilePopup.querySelector(".popup__form");
+const profileNameInput = profileFormElement.querySelector(".popup__input_el_profile-name");
+const profileJobInput = profileFormElement.querySelector(".popup__input_el_profile-job");
+const profilePopupCloseButton = profilePopup.querySelector('.popup__close-button');
+const profileEditButton = document.querySelector('.profile__button_type_edit');
+const profileNameElement = document.querySelector('.profile__name');
+const profileJobElement = document.querySelector('.profile__job');
+
+profileEditButton.addEventListener('click', () => {
+  profileNameInput.value = profileNameElement.textContent;
+  profileJobInput.value = profileJobElement.textContent;
+  openPopup(profilePopup);
+});
+
+profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup));
+
+profileFormElement.addEventListener('submit', evt => {
+  evt.preventDefault();
+  profileNameElement.textContent = profileNameInput.value;
+  profileJobElement.textContent = profileJobInput.value;
+  closePopup(profilePopup);
+});
+
+//3. Манипуляции с попапом добавления нового места
+const newPlacePopup = document.querySelector('.popup_type_new-place');
+const newPlaceFormElement = newPlacePopup.querySelector(".popup__form");
+const newPlaceNameInput = newPlaceFormElement.querySelector(".popup__input_el_place-name");
+const newPlaceImageLinkInput = newPlaceFormElement.querySelector(".popup__input_el_image-link");
+const newPlacePopupCloseButton = newPlacePopup.querySelector(".popup__close-button");
+const addNewPlaceButton = document.querySelector('.profile__button_type_add');
+
+addNewPlaceButton.addEventListener('click', () => {
+  newPlaceNameInput.value = '';
+  newPlaceImageLinkInput.value = '';
+  openPopup(newPlacePopup);
+});
+
+newPlacePopupCloseButton.addEventListener('click', () => closePopup(newPlacePopup));
+
+newPlaceFormElement.addEventListener('submit', evt => {
+  evt.preventDefault();
+  cardsList.prepend(createCardElement(newPlaceNameInput.value, newPlaceImageLinkInput.value));
+  closePopup(newPlacePopup);
+});
+
+//Применяемые функции
 function createCardElement(name, link) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__title').textContent = name;
@@ -39,33 +88,10 @@ function createCardElement(name, link) {
   return cardElement;
 }
 
-const popup = document.querySelector('.popup');
-const formElement = popup.querySelector(".popup__form");
-const nameInput = formElement.querySelector(".popup__input_el_name");
-const jobInput = formElement.querySelector(".popup__input_el_job");
-
-const profileEditButton = document.querySelector('.profile__button_type_edit');
-const popupCloseButton = document.querySelector('.popup__close-button');
-const profileNameElement = document.querySelector('.profile__name');
-const profileJobElement = document.querySelector('.profile__job');
-
-function openPopup() {
-  nameInput.value = profileNameElement.textContent;
-  jobInput.value = profileJobElement.textContent;
+function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
-function closePopup() {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
-
-function formSubmitHandler(evt) {
-  evt.preventDefault();
-  profileNameElement.textContent = nameInput.value;
-  profileJobElement.textContent = jobInput.value;
-  closePopup();
-}
-
-profileEditButton.addEventListener('click', openPopup);
-popupCloseButton.addEventListener('click', closePopup);
-formElement.addEventListener('submit', formSubmitHandler);
