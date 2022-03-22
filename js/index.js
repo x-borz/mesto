@@ -81,10 +81,18 @@ newPlaceFormElement.addEventListener('submit', evt => {
 //Применяемые функции
 function createCardElement(name, link) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+
   cardElement.querySelector('.card__title').textContent = name;
+
   const cardImage = cardElement.querySelector('.card__img');
   cardImage.src = link;
   cardImage.alt = name;
+
+  cardElement.querySelector('.card__like-button').addEventListener(
+    'click',
+    evt => evt.target.classList.toggle('card__like-button_active')
+  );
+
   return cardElement;
 }
 
