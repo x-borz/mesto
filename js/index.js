@@ -93,6 +93,11 @@ function createCardElement(name, link) {
     evt => evt.target.classList.toggle('card__like-button_active')
   );
 
+  cardElement.querySelector('.card__drop-button').addEventListener(
+    'click',
+    evt => evt.target.parentNode.remove()
+  );
+
   return cardElement;
 }
 
