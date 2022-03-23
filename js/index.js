@@ -78,6 +78,14 @@ newPlaceFormElement.addEventListener('submit', evt => {
   closePopup(newPlacePopup);
 });
 
+//4. Манипуляции с попапом для показа изображения
+const imagePopup = document.querySelector('.popup_type_image');
+const imagePopupCloseButton = imagePopup.querySelector(".popup__close-button");
+const imagePopupImageElement = imagePopup.querySelector(".popup__img");
+const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
+
+imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+
 //Применяемые функции
 function createCardElement(name, link) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
@@ -87,6 +95,12 @@ function createCardElement(name, link) {
   const cardImage = cardElement.querySelector('.card__img');
   cardImage.src = link;
   cardImage.alt = name;
+  cardImage.addEventListener('click', () => {
+    imagePopupImageElement.src = cardImage.src;
+    imagePopupImageElement.alt = cardImage.alt;
+    imagePopupCaptionElement.textContent = cardImage.alt;
+    openPopup(imagePopup)
+  });
 
   cardElement.querySelector('.card__like-button').addEventListener(
     'click',
