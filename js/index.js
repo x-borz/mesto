@@ -99,7 +99,7 @@ function createCardElement(name, link) {
     imagePopupImageElement.src = cardImage.src;
     imagePopupImageElement.alt = cardImage.alt;
     imagePopupCaptionElement.textContent = cardImage.alt;
-    openPopup(imagePopup)
+    openPopup(imagePopup);
   });
 
   cardElement.querySelector('.card__like-button').addEventListener(
