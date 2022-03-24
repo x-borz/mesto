@@ -104,7 +104,7 @@ function createCardElement(name, link) {
 
   cardElement.querySelector('.element__like-button').addEventListener(
     'click',
-    evt => evt.target.classList.toggle('card__like-button_active')
+    evt => evt.target.classList.toggle('element__like-button_active')
   );
 
   cardElement.querySelector('.element__drop-button').addEventListener(
