@@ -1,3 +1,40 @@
+//0. Применяемые функции
+function createCardElement(name, link) {
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+
+  cardElement.querySelector('.element__title').textContent = name;
+
+  const cardImage = cardElement.querySelector('.element__img');
+  cardImage.src = link;
+  cardImage.alt = name;
+  cardImage.addEventListener('click', () => {
+    imagePopupImageElement.src = cardImage.src;
+    imagePopupImageElement.alt = cardImage.alt;
+    imagePopupCaptionElement.textContent = cardImage.alt;
+    openPopup(imagePopup);
+  });
+
+  cardElement.querySelector('.element__like-button').addEventListener(
+    'click',
+    evt => evt.target.classList.toggle('element__like-button_active')
+  );
+
+  cardElement.querySelector('.element__drop-button').addEventListener(
+    'click',
+    evt => evt.target.parentNode.remove()
+  );
+
+  return cardElement;
+}
+
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
 //1. Загрузка 6 карточек
 const initialCards = [
   {
@@ -62,9 +99,9 @@ const newPlaceFormElement = newPlacePopup.querySelector(".popup__form");
 const newPlaceNameInput = newPlaceFormElement.querySelector(".popup__input_el_place-name");
 const newPlaceImageLinkInput = newPlaceFormElement.querySelector(".popup__input_el_image-link");
 const newPlacePopupCloseButton = newPlacePopup.querySelector(".popup__close-button");
-const addNewPlaceButton = document.querySelector('.profile__button_type_add');
+const newPlaceButton = document.querySelector('.profile__button_type_add');
 
-addNewPlaceButton.addEventListener('click', () => {
+newPlaceButton.addEventListener('click', () => {
   newPlaceNameInput.value = '';
   newPlaceImageLinkInput.value = '';
   openPopup(newPlacePopup);
@@ -85,40 +122,3 @@ const imagePopupImageElement = imagePopup.querySelector(".popup__img");
 const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
 
 imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
-
-//Применяемые функции
-function createCardElement(name, link) {
-  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-
-  cardElement.querySelector('.element__title').textContent = name;
-
-  const cardImage = cardElement.querySelector('.element__img');
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardImage.addEventListener('click', () => {
-    imagePopupImageElement.src = cardImage.src;
-    imagePopupImageElement.alt = cardImage.alt;
-    imagePopupCaptionElement.textContent = cardImage.alt;
-    openPopup(imagePopup);
-  });
-
-  cardElement.querySelector('.element__like-button').addEventListener(
-    'click',
-    evt => evt.target.classList.toggle('element__like-button_active')
-  );
-
-  cardElement.querySelector('.element__drop-button').addEventListener(
-    'click',
-    evt => evt.target.parentNode.remove()
-  );
-
-  return cardElement;
-}
-
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-}
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
