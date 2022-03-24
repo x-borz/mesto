@@ -1,4 +1,4 @@
-.card__drop-button {
+.element__drop-button {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -13,7 +13,7 @@
   transition: opacity .25s linear;
 }
 
-.card__drop-button:hover {
+.element__drop-button:hover {
   opacity: .6;
   cursor: pointer;
 }

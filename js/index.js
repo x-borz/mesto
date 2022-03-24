@@ -26,7 +26,7 @@ const initialCards = [
   }
 ];
 
-const cardsList = document.querySelector('.cards');
+const cardsList = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#card').content;
 
 initialCards.forEach(item => cardsList.append(createCardElement(item.name, item.link)));
@@ -88,11 +88,11 @@ imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
 //Применяемые функции
 function createCardElement(name, link) {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
-  cardElement.querySelector('.card__title').textContent = name;
+  cardElement.querySelector('.element__title').textContent = name;
 
-  const cardImage = cardElement.querySelector('.card__img');
+  const cardImage = cardElement.querySelector('.element__img');
   cardImage.src = link;
   cardImage.alt = name;
   cardImage.addEventListener('click', () => {
@@ -102,12 +102,12 @@ function createCardElement(name, link) {
     openPopup(imagePopup);
   });
 
-  cardElement.querySelector('.card__like-button').addEventListener(
+  cardElement.querySelector('.element__like-button').addEventListener(
     'click',
     evt => evt.target.classList.toggle('card__like-button_active')
   );
 
-  cardElement.querySelector('.card__drop-button').addEventListener(
+  cardElement.querySelector('.element__drop-button').addEventListener(
     'click',
     evt => evt.target.parentNode.remove()
   );
