@@ -3,4 +3,10 @@
   width: 282px;
   height: 282px;
   object-fit: cover;
+  opacity: 1;
+  transition: opacity .5s linear;
+}
+
+.element__img:hover {
+  opacity: .6;
 }
