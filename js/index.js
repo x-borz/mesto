@@ -50,13 +50,24 @@ const imagePopupCloseButton = imagePopup.querySelector(".popup__close-button");
 const imagePopupImageElement = imagePopup.querySelector(".popup__img");
 const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
 
-//0. Применяемые функции
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-}
+const popups = [profilePopup, newPlacePopup, imagePopup];
 
+//0. Применяемые функции
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+}
+
+function escapeHandler(evt) {
+  if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
+    closePopup(popup);
+    document.removeEventListener('keydown', escapeHandler);
+  }
+}
+
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', escapeHandler);
 }
 
 function createCardElement(name, link) {
@@ -123,3 +134,12 @@ newPlaceFormElement.addEventListener('submit', evt => {
 
 //4. Манипуляции с попапом для показа изображения
 imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+
+//5. Закрытие попапов по клику на темный фон.
+popups.forEach(popup => {
+  popup.addEventListener('click', evt => {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(popup);
+    }
+  });
+});
