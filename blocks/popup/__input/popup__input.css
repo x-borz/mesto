@@ -1,11 +1,10 @@
 .popup__input {
   border: 0;
   outline: none;
-  padding-bottom: 4px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
-  height: 27px;
+  height: 12px;
   background-color: transparent;
-  margin-top: 24px;
   font-family: inherit;
   font-style: normal;
   font-weight: 400;
