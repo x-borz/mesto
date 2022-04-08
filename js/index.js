@@ -50,9 +50,20 @@ const imagePopupCloseButton = imagePopup.querySelector(".popup__close-button");
 const imagePopupImageElement = imagePopup.querySelector(".popup__img");
 const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
 
-const popups = [profilePopup, newPlacePopup, imagePopup];
+const popups = Array.from(document.querySelector('.popup'));
 
 //0. Применяемые функции
+function clearFormErrors(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  const submitButton = formElement.querySelector('.popup__submit-button');
+
+  inputList.forEach(inputElement => {
+    hideInputError(formElement, inputElement, 'popup__input_type_error', 'popup__error_visible');
+  });
+
+  toggleButtonState(inputList, submitButton, 'popup__submit-button_disabled');
+}
+
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
@@ -105,6 +116,7 @@ initialCards.forEach(item => cardsList.append(createCardElement(item.name, item.
 profileEditButton.addEventListener('click', () => {
   profileNameInput.value = profileNameElement.textContent;
   profileJobInput.value = profileJobElement.textContent;
+  clearFormErrors(profileFormElement);
   openPopup(profilePopup);
 });
 
@@ -121,6 +133,7 @@ profileFormElement.addEventListener('submit', evt => {
 newPlaceButton.addEventListener('click', () => {
   newPlaceNameInput.value = '';
   newPlaceImageLinkInput.value = '';
+  clearFormErrors(newPlaceFormElement);
   openPopup(newPlacePopup);
 });
 
