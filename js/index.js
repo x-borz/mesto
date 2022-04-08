@@ -148,11 +148,11 @@ newPlaceFormElement.addEventListener('submit', evt => {
 //4. Манипуляции с попапом для показа изображения
 imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
-//5. Закрытие попапов по клику на темный фон.
+//5. Закрытие попапов по клику на темный фон
 popups.forEach(popup => {
   popup.addEventListener('click', evt => {
     if (evt.target.classList.contains('popup')) {
-      closePopup(popup);
+      closePopup(evt.target);
     }
   });
 });
