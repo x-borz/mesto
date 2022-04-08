@@ -50,7 +50,7 @@ const imagePopupCloseButton = imagePopup.querySelector(".popup__close-button");
 const imagePopupImageElement = imagePopup.querySelector(".popup__img");
 const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
 
-const popups = Array.from(document.querySelector('.popup'));
+const popups = Array.from(document.querySelectorAll('.popup'));
 
 //0. Применяемые функции
 function clearFormErrors(formElement) {
