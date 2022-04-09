@@ -33,7 +33,6 @@ const profilePopup = document.querySelector('.popup_type_profile');
 const profileFormElement = profilePopup.querySelector(".popup__form");
 const profileNameInput = profileFormElement.querySelector(".popup__input_el_profile-name");
 const profileJobInput = profileFormElement.querySelector(".popup__input_el_profile-job");
-const profilePopupCloseButton = profilePopup.querySelector('.popup__close-button');
 const profileEditButton = document.querySelector('.profile__button_type_edit');
 const profileNameElement = document.querySelector('.profile__name');
 const profileJobElement = document.querySelector('.profile__job');
@@ -42,11 +41,9 @@ const newPlacePopup = document.querySelector('.popup_type_new-place');
 const newPlaceFormElement = newPlacePopup.querySelector(".popup__form");
 const newPlaceNameInput = newPlaceFormElement.querySelector(".popup__input_el_place-name");
 const newPlaceImageLinkInput = newPlaceFormElement.querySelector(".popup__input_el_image-link");
-const newPlacePopupCloseButton = newPlacePopup.querySelector(".popup__close-button");
 const newPlaceButton = document.querySelector('.profile__button_type_add');
 
 const imagePopup = document.querySelector('.popup_type_image');
-const imagePopupCloseButton = imagePopup.querySelector(".popup__close-button");
 const imagePopupImageElement = imagePopup.querySelector(".popup__img");
 const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
 
@@ -64,16 +61,16 @@ function clearFormErrors(formElement) {
   toggleButtonState(inputList, submitButton, 'popup__submit-button_disabled');
 }
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
-
 function escapeHandler(evt) {
   if (evt.key === 'Escape') {
     const popup = document.querySelector('.popup_opened');
     closePopup(popup);
-    document.removeEventListener('keydown', escapeHandler);
   }
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', escapeHandler);
 }
 
 function openPopup(popup) {
@@ -120,8 +117,6 @@ profileEditButton.addEventListener('click', () => {
   openPopup(profilePopup);
 });
 
-profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup));
-
 profileFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   profileNameElement.textContent = profileNameInput.value;
@@ -137,22 +132,17 @@ newPlaceButton.addEventListener('click', () => {
   openPopup(newPlacePopup);
 });
 
-newPlacePopupCloseButton.addEventListener('click', () => closePopup(newPlacePopup));
-
 newPlaceFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   cardsList.prepend(createCardElement(newPlaceNameInput.value, newPlaceImageLinkInput.value));
   closePopup(newPlacePopup);
 });
 
-//4. Манипуляции с попапом для показа изображения
-imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
-
-//5. Закрытие попапов по клику на темный фон
+//4. Закрытие попапов по клику на темный фон/крестик
 popups.forEach(popup => {
   popup.addEventListener('click', evt => {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(evt.target);
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup);
     }
   });
 });

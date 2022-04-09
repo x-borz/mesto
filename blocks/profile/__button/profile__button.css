@@ -3,6 +3,7 @@
   background-color: #000;
   background-repeat: no-repeat;
   background-position: center center;
+  outline: none;
   opacity: 1;
   transition: opacity .3s linear;
 }
