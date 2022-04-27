@@ -1,4 +1,5 @@
 import Card from "./Card.js";
+import FormValidator from './FormValidator.js'
 
 //объявление констант/переменных
 const initialCards = [
@@ -28,6 +29,14 @@ const initialCards = [
   }
 ];
 
+const validParams = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
 const cardsList = document.querySelector('.elements');
 
 const profilePopup = document.querySelector('.popup_type_profile');
@@ -46,18 +55,10 @@ const newPlaceButton = document.querySelector('.profile__button_type_add');
 
 const popups = Array.from(document.querySelectorAll('.popup'));
 
+const profileFormValidator = new FormValidator(validParams, profileFormElement);
+const newPlaceFormValidator = new FormValidator(validParams, newPlaceFormElement);
+
 //0. Применяемые функции
-function clearFormErrors(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
-  const submitButton = formElement.querySelector('.popup__submit-button');
-
-  inputList.forEach(inputElement => {
-    hideInputError(formElement, inputElement, 'popup__input_type_error', 'popup__error_visible');
-  });
-
-  toggleButtonState(inputList, submitButton, 'popup__submit-button_disabled');
-}
-
 function escapeHandler(evt) {
   if (evt.key === 'Escape') {
     const popup = document.querySelector('.popup_opened');
@@ -86,7 +87,7 @@ initialCards.forEach(item => {
 profileEditButton.addEventListener('click', () => {
   profileNameInput.value = profileNameElement.textContent;
   profileJobInput.value = profileJobElement.textContent;
-  clearFormErrors(profileFormElement);
+  profileFormValidator.clearErrors();
   openPopup(profilePopup);
 });
 
@@ -101,7 +102,7 @@ profileFormElement.addEventListener('submit', evt => {
 newPlaceButton.addEventListener('click', () => {
   newPlaceNameInput.value = '';
   newPlaceImageLinkInput.value = '';
-  clearFormErrors(newPlaceFormElement);
+  newPlaceFormValidator.clearErrors();
   openPopup(newPlacePopup);
 });
 
@@ -121,3 +122,7 @@ popups.forEach(popup => {
     }
   });
 });
+
+//включаем валидацию форм
+profileFormValidator.enableValidation();
+newPlaceFormValidator.enableValidation();
