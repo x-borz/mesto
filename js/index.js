@@ -1,3 +1,5 @@
+import Card from "./Card.js";
+
 //объявление констант/переменных
 const initialCards = [
   {
@@ -27,7 +29,6 @@ const initialCards = [
 ];
 
 const cardsList = document.querySelector('.elements');
-const cardTemplate = document.querySelector('#card').content;
 
 const profilePopup = document.querySelector('.popup_type_profile');
 const profileFormElement = profilePopup.querySelector(".popup__form");
@@ -42,10 +43,6 @@ const newPlaceFormElement = newPlacePopup.querySelector(".popup__form");
 const newPlaceNameInput = newPlaceFormElement.querySelector(".popup__input_el_place-name");
 const newPlaceImageLinkInput = newPlaceFormElement.querySelector(".popup__input_el_image-link");
 const newPlaceButton = document.querySelector('.profile__button_type_add');
-
-const imagePopup = document.querySelector('.popup_type_image');
-const imagePopupImageElement = imagePopup.querySelector(".popup__img");
-const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
 
 const popups = Array.from(document.querySelectorAll('.popup'));
 
@@ -73,41 +70,17 @@ function closePopup(popup) {
   document.removeEventListener('keydown', escapeHandler);
 }
 
-function openPopup(popup) {
+export default function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', escapeHandler);
 }
 
-function createCardElement(name, link) {
-  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-
-  cardElement.querySelector('.element__title').textContent = name;
-
-  const cardImage = cardElement.querySelector('.element__img');
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardImage.addEventListener('click', () => {
-    imagePopupImageElement.src = cardImage.src;
-    imagePopupImageElement.alt = cardImage.alt;
-    imagePopupCaptionElement.textContent = cardImage.alt;
-    openPopup(imagePopup);
-  });
-
-  cardElement.querySelector('.element__like-button').addEventListener(
-    'click',
-    evt => evt.target.classList.toggle('element__like-button_active')
-  );
-
-  cardElement.querySelector('.element__drop-button').addEventListener(
-    'click',
-    evt => evt.target.parentNode.remove()
-  );
-
-  return cardElement;
-}
-
 //1. Загружаем 6 карточек "из коробки"
-initialCards.forEach(item => cardsList.append(createCardElement(item.name, item.link)));
+initialCards.forEach(item => {
+  const card = new Card(item.name, item.link, '.card-template');
+  const cardElement = card.generateCard();
+  cardsList.append(cardElement);
+});
 
 //2. Манипуляции с попапом редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -134,7 +107,9 @@ newPlaceButton.addEventListener('click', () => {
 
 newPlaceFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
-  cardsList.prepend(createCardElement(newPlaceNameInput.value, newPlaceImageLinkInput.value));
+  const card = new Card(newPlaceNameInput.value, newPlaceImageLinkInput.value, '.card-template');
+  const cardElement = card.generateCard();
+  cardsList.prepend(cardElement);
   closePopup(newPlacePopup);
 });
 
