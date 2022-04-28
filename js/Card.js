@@ -1,8 +1,5 @@
-import openPopup from "./index.js";
-
-const imagePopup = document.querySelector('.popup_type_image');
-const imagePopupImageElement = imagePopup.querySelector(".popup__img");
-const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");
+import {openPopup} from "./utils.js";
+import {imagePopup, imagePopupImageElement, imagePopupCaptionElement} from './constants.js'
 
 export default class Card {
   constructor(name, link, templateSelector) {
@@ -25,6 +22,7 @@ export default class Card {
 
   _handleDropClick() {
     this._element.remove();
+    this._element = null;
   }
 
   _handleOpenPopup() {
