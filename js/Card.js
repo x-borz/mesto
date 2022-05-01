@@ -47,7 +47,7 @@ export default class Card {
     this._element.querySelector('.element__img').addEventListener(
       'click',
       () => this._handleOpenPopup()
-    )
+    );
   }
 
   generateCard() {

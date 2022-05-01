@@ -12,13 +12,6 @@
   .profile__button_type_add {
     margin: 33px 0 0 0;
     background-size: 16px 16px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .profile__button_type_add {
-    width: 100%;
-    margin: 33px 0 0 0;
-    background-size: 16px 16px;
+    width: 282px;
   }
 }
