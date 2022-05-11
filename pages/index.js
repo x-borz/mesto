@@ -43,8 +43,8 @@ function createCardElement({name, link}) {
     {
       name,
       link,
-      handleCardClick: imageInfo => {
-        popupWithImage.setImageInfo(imageInfo);
+      handleCardClick: () => {
+        popupWithImage.setImageInfo({name, link});
         popupWithImage.open();
       }
     },
@@ -61,6 +61,10 @@ popupWithImage.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithFormNewPlace.setEventListeners();
 
+// включаем валидацию форм
+profileFormValidator.enableValidation();
+newPlaceFormValidator.enableValidation();
+
 // обрабатываем нажатие на кнопку редактирования профиля
 profileEditButton.addEventListener('click', () => {
   popupWithFormProfile.setInputValues(userInfo.getUserInfo());
@@ -73,7 +77,3 @@ newPlaceButton.addEventListener('click', () => {
   newPlaceFormValidator.clearErrors();
   popupWithFormNewPlace.open();
 });
-
-//включаем валидацию форм
-profileFormValidator.enableValidation();
-newPlaceFormValidator.enableValidation();
