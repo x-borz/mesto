@@ -1,9 +1,7 @@
-import Card from "./Card.js";
-import FormValidator from './FormValidator.js'
-import {openPopup, closePopup} from "./utils.js";
-import {initialCards, validParams} from "./constants.js";
-
-const cardsList = document.querySelector('.elements');
+import FormValidator from '../components/FormValidator.js'
+import {openPopup, closePopup, createCardElement} from "../utils/utils.js";
+import {initialCards, validParams} from "../utils/constants.js";
+import Section from "../components/Section.js";
 
 const profilePopup = document.querySelector('.popup_type_profile');
 const profileFormElement = profilePopup.querySelector(".popup__form");
@@ -21,16 +19,19 @@ const newPlaceButton = document.querySelector('.profile__button_type_add');
 
 const popups = Array.from(document.querySelectorAll('.popup'));
 
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: ({name, link}) => cardList.addItem(createCardElement(name, link))
+  },
+  '.elements'
+);
+
 const profileFormValidator = new FormValidator(validParams, profileFormElement);
 const newPlaceFormValidator = new FormValidator(validParams, newPlaceFormElement);
 
-function createCardElement(name, link) {
-  const card = new Card(name, link, '.card-template');
-  return card.generateCard();
-}
-
 //1. Загружаем 6 карточек "из коробки"
-initialCards.forEach(item => cardsList.append(createCardElement(item.name, item.link)));
+cardList.renderItems();
 
 //2. Манипуляции с попапом редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -57,7 +58,7 @@ newPlaceButton.addEventListener('click', () => {
 
 newPlaceFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
-  cardsList.prepend(createCardElement(newPlaceNameInput.value, newPlaceImageLinkInput.value));
+  cardList.addItem(createCardElement(newPlaceNameInput.value, newPlaceImageLinkInput.value));
   closePopup(newPlacePopup);
 });
 
