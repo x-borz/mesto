@@ -14,7 +14,7 @@ import UserInfo from "../components/UserInfo.js";
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: (item) => cardList.addItem(createCardElement(item))
+    renderer: item => cardList.addItem(createCardElement(item))
   },
   '.elements'
 );
@@ -43,7 +43,7 @@ function createCardElement({name, link}) {
     {
       name,
       link,
-      handleCardClick: (imageInfo) => {
+      handleCardClick: imageInfo => {
         popupWithImage.setImageInfo(imageInfo);
         popupWithImage.open();
       }
