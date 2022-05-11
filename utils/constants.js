@@ -32,7 +32,3 @@ export const validParams = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 }
-
-export const imagePopup = document.querySelector('.popup_type_image');
-export const imagePopupImageElement = imagePopup.querySelector(".popup__img");
-export const imagePopupCaptionElement = imagePopup.querySelector(".popup__caption");

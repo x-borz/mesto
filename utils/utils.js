@@ -1,5 +1,3 @@
-import Card from "../components/Card.js";
-
 function escapeHandler(evt) {
   if (evt.key === 'Escape') {
     const popup = document.querySelector('.popup_opened');
@@ -15,9 +13,4 @@ export function closePopup(popup) {
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', escapeHandler);
-}
-
-export function createCardElement(name, link) {
-  const card = new Card(name, link, '.card-template');
-  return card.generateCard();
 }

@@ -1,7 +1,9 @@
 import FormValidator from '../components/FormValidator.js'
-import {openPopup, closePopup, createCardElement} from "../utils/utils.js";
+import {openPopup, closePopup} from "../utils/utils.js";
 import {initialCards, validParams} from "../utils/constants.js";
+import Card from "../components/Card.js";
 import Section from "../components/Section.js";
+import PopupWithImage from '../components/PopupWithImage.js';
 
 const profilePopup = document.querySelector('.popup_type_profile');
 const profileFormElement = profilePopup.querySelector(".popup__form");
@@ -17,7 +19,7 @@ const newPlaceNameInput = newPlaceFormElement.querySelector(".popup__input_el_pl
 const newPlaceImageLinkInput = newPlaceFormElement.querySelector(".popup__input_el_image-link");
 const newPlaceButton = document.querySelector('.profile__button_type_add');
 
-const popups = Array.from(document.querySelectorAll('.popup'));
+// const popups = Array.from(document.querySelectorAll('.popup'));
 
 const cardList = new Section(
   {
@@ -27,11 +29,30 @@ const cardList = new Section(
   '.elements'
 );
 
+const popupWithImage = new PopupWithImage('.popup_type_image');
+
 const profileFormValidator = new FormValidator(validParams, profileFormElement);
 const newPlaceFormValidator = new FormValidator(validParams, newPlaceFormElement);
 
+export function createCardElement(name, link) {
+  const card = new Card(
+    {
+      name,
+      link,
+      handleCardClick: (imageInfo) => {
+        popupWithImage.setImageInfo(imageInfo);
+        popupWithImage.openPopup();
+      }
+    },
+    '.card-template'
+  );
+  return card.generateCard();
+}
+
 //1. Загружаем 6 карточек "из коробки"
 cardList.renderItems();
+
+popupWithImage.setEventListeners();
 
 //2. Манипуляции с попапом редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -62,14 +83,14 @@ newPlaceFormElement.addEventListener('submit', evt => {
   closePopup(newPlacePopup);
 });
 
-//4. Закрытие попапов по клику на темный фон/крестик
-popups.forEach(popup => {
-  popup.addEventListener('click', evt => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')) {
-      closePopup(popup);
-    }
-  });
-});
+// //4. Закрытие попапов по клику на темный фон/крестик
+// popups.forEach(popup => {
+//   popup.addEventListener('click', evt => {
+//     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')) {
+//       closePopup(popup);
+//     }
+//   });
+// });
 
 //включаем валидацию форм
 profileFormValidator.enableValidation();
