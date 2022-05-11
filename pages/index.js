@@ -1,47 +1,57 @@
 import FormValidator from '../components/FormValidator.js'
-import {openPopup, closePopup} from "../utils/utils.js";
 import {initialCards, validParams} from "../utils/constants.js";
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from "../components/PopupWithForm.js";
 
-const profilePopup = document.querySelector('.popup_type_profile');
-const profileFormElement = profilePopup.querySelector(".popup__form");
-const profileNameInput = profileFormElement.querySelector(".popup__input_el_profile-name");
-const profileJobInput = profileFormElement.querySelector(".popup__input_el_profile-job");
-const profileEditButton = document.querySelector('.profile__button_type_edit');
-const profileNameElement = document.querySelector('.profile__name');
-const profileJobElement = document.querySelector('.profile__job');
+const profileFormElement = document.querySelector(".popup__form_type_profile");
+// const profileNameInput = profileFormElement.querySelector(".popup__input_el_profile-name");
+// const profileJobInput = profileFormElement.querySelector(".popup__input_el_profile-job");
+// const profileEditButton = document.querySelector('.profile__button_type_edit');
+// const profileNameElement = document.querySelector('.profile__name');
+// const profileJobElement = document.querySelector('.profile__job');
 
-const newPlacePopup = document.querySelector('.popup_type_new-place');
-const newPlaceFormElement = newPlacePopup.querySelector(".popup__form");
-const newPlaceNameInput = newPlaceFormElement.querySelector(".popup__input_el_place-name");
-const newPlaceImageLinkInput = newPlaceFormElement.querySelector(".popup__input_el_image-link");
+const newPlaceFormElement = document.querySelector(".popup__form_type_new-place");
+// const newPlaceNameInput = newPlaceFormElement.querySelector(".popup__input_el_place-name");
+// const newPlaceImageLinkInput = newPlaceFormElement.querySelector(".popup__input_el_image-link");
 const newPlaceButton = document.querySelector('.profile__button_type_add');
-
-// const popups = Array.from(document.querySelectorAll('.popup'));
 
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: ({name, link}) => cardList.addItem(createCardElement(name, link))
+    renderer: (item) => cardList.addItem(createCardElement(item))
   },
   '.elements'
 );
 
 const popupWithImage = new PopupWithImage('.popup_type_image');
+const popupWithFormProfile = new PopupWithForm(
+  {
+    handleFormSubmit: values => {
+
+    }
+  },
+  '.popup_type_profile'
+);
+const popupWithFormNewPlace = new PopupWithForm(
+  {
+    handleFormSubmit: values => cardList.addItem(createCardElement(values))
+  },
+  '.popup_type_new-place'
+);
 
 const profileFormValidator = new FormValidator(validParams, profileFormElement);
 const newPlaceFormValidator = new FormValidator(validParams, newPlaceFormElement);
 
-export function createCardElement(name, link) {
+function createCardElement({name, link}) {
   const card = new Card(
     {
       name,
       link,
       handleCardClick: (imageInfo) => {
         popupWithImage.setImageInfo(imageInfo);
-        popupWithImage.openPopup();
+        popupWithImage.open();
       }
     },
     '.card-template'
@@ -53,44 +63,36 @@ export function createCardElement(name, link) {
 cardList.renderItems();
 
 popupWithImage.setEventListeners();
+popupWithFormProfile.setEventListeners();
+popupWithFormNewPlace.setEventListeners();
 
-//2. Манипуляции с попапом редактирования профиля
-profileEditButton.addEventListener('click', () => {
-  profileNameInput.value = profileNameElement.textContent;
-  profileJobInput.value = profileJobElement.textContent;
-  profileFormValidator.clearErrors();
-  openPopup(profilePopup);
-});
-
-profileFormElement.addEventListener('submit', evt => {
-  evt.preventDefault();
-  profileNameElement.textContent = profileNameInput.value;
-  profileJobElement.textContent = profileJobInput.value;
-  closePopup(profilePopup);
-});
+// //2. Манипуляции с попапом редактирования профиля
+// profileEditButton.addEventListener('click', () => {
+//   profileNameInput.value = profileNameElement.textContent;
+//   profileJobInput.value = profileJobElement.textContent;
+//   profileFormValidator.clearErrors();
+//   openPopup(profilePopup);
+// });
+//
+// profileFormElement.addEventListener('submit', evt => {
+//   evt.preventDefault();
+//   profileNameElement.textContent = profileNameInput.value;
+//   profileJobElement.textContent = profileJobInput.value;
+//   closePopup(profilePopup);
+// });
 
 //3. Манипуляции с попапом добавления нового места
-newPlaceButton.addEventListener('click', () => {
-  newPlaceNameInput.value = '';
-  newPlaceImageLinkInput.value = '';
-  newPlaceFormValidator.clearErrors();
-  openPopup(newPlacePopup);
-});
+  newPlaceButton.addEventListener('click', () => {
+    newPlaceFormValidator.clearErrors();
+    popupWithFormNewPlace.open();
+  });
 
-newPlaceFormElement.addEventListener('submit', evt => {
-  evt.preventDefault();
-  cardList.addItem(createCardElement(newPlaceNameInput.value, newPlaceImageLinkInput.value));
-  closePopup(newPlacePopup);
-});
-
-// //4. Закрытие попапов по клику на темный фон/крестик
-// popups.forEach(popup => {
-//   popup.addEventListener('click', evt => {
-//     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')) {
-//       closePopup(popup);
-//     }
-//   });
+// newPlaceFormElement.addEventListener('submit', evt => {
+//   evt.preventDefault();
+//   cardList.addItem(createCardElement(newPlaceNameInput.value, newPlaceImageLinkInput.value));
+//   closePopup(newPlacePopup);
 // });
+
 
 //включаем валидацию форм
 profileFormValidator.enableValidation();
