@@ -1,17 +1,17 @@
-import './pages/index.css';
+import './index.css';
 
-import FormValidator from './components/FormValidator.js'
+import FormValidator from '../components/FormValidator.js'
 import {
   initialCards,
   validParams,
   profileEditButton,
   newPlaceButton
-} from "./utils/constants.js";
-import Card from "./components/Card.js";
-import Section from "./components/Section.js";
-import PopupWithImage from './components/PopupWithImage.js';
-import PopupWithForm from "./components/PopupWithForm.js";
-import UserInfo from "./components/UserInfo.js";
+} from "../utils/constants.js";
+import Card from "../components/Card.js";
+import Section from "../components/Section.js";
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 const addCard = ({name, link}) => {
   const card = new Card(
