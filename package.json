@@ -4,7 +4,7 @@
   "description": "Проект размещен [здесь](https://x-borz.github.io/mesto/).",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && webpack --mode production",
+    "build": "webpack --mode production",
     "dev": "webpack serve"
   },
   "repository": {
@@ -22,6 +22,7 @@
     "@babel/preset-env": "^7.17.10",
     "autoprefixer": "^10.4.7",
     "babel-loader": "^8.2.5",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "cssnano": "^5.1.7",
     "html-webpack-plugin": "^5.5.0",
