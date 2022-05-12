@@ -11,10 +11,28 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 
+const addCard = ({name, link}) => {
+  const card = new Card(
+    {
+      name,
+      link,
+      handleCardClick: () => {
+        popupWithImage.setImageInfo({name, link});
+        popupWithImage.open();
+      }
+    },
+    '.card-template'
+  );
+
+  const cardElement = card.generateCard();
+
+  cardList.addItem(cardElement);
+}
+
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: item => cardList.addItem(createCardElement(item))
+    renderer: addCard
   },
   '.elements'
 );
@@ -28,7 +46,7 @@ const popupWithFormProfile = new PopupWithForm(
 );
 const popupWithFormNewPlace = new PopupWithForm(
   {
-    handleFormSubmit: values => cardList.addItem(createCardElement(values))
+    handleFormSubmit: addCard
   },
   '.popup_type_new-place'
 );
@@ -37,21 +55,6 @@ const userInfo = new UserInfo('.profile__name', '.profile__job');
 
 const profileFormValidator = new FormValidator(validParams, '.popup__form_type_profile');
 const newPlaceFormValidator = new FormValidator(validParams, '.popup__form_type_new-place');
-
-function createCardElement({name, link}) {
-  const card = new Card(
-    {
-      name,
-      link,
-      handleCardClick: () => {
-        popupWithImage.setImageInfo({name, link});
-        popupWithImage.open();
-      }
-    },
-    '.card-template'
-  );
-  return card.generateCard();
-}
 
 // загружаем 6 карточек "из коробки"
 cardList.renderItems();
