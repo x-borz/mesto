@@ -1,15 +1,17 @@
-import FormValidator from '../components/FormValidator.js'
+import './pages/index.css';
+
+import FormValidator from './components/FormValidator.js'
 import {
   initialCards,
   validParams,
   profileEditButton,
   newPlaceButton
-} from "../utils/constants.js";
-import Card from "../components/Card.js";
-import Section from "../components/Section.js";
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from "../components/PopupWithForm.js";
-import UserInfo from "../components/UserInfo.js";
+} from "./utils/constants.js";
+import Card from "./components/Card.js";
+import Section from "./components/Section.js";
+import PopupWithImage from './components/PopupWithImage.js';
+import PopupWithForm from "./components/PopupWithForm.js";
+import UserInfo from "./components/UserInfo.js";
 
 const addCard = ({name, link}) => {
   const card = new Card(
@@ -56,9 +58,6 @@ const userInfo = new UserInfo('.profile__name', '.profile__job');
 const profileFormValidator = new FormValidator(validParams, '.popup__form_type_profile');
 const newPlaceFormValidator = new FormValidator(validParams, '.popup__form_type_new-place');
 
-// загружаем 6 карточек "из коробки"
-cardList.renderItems();
-
 // включаем обработку событий в попапах
 popupWithImage.setEventListeners();
 popupWithFormProfile.setEventListeners();
@@ -80,3 +79,6 @@ newPlaceButton.addEventListener('click', () => {
   newPlaceFormValidator.clearErrors();
   popupWithFormNewPlace.open();
 });
+
+// загружаем 6 карточек "из коробки"
+cardList.renderItems();
