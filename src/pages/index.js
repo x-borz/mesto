@@ -19,8 +19,7 @@ const addCard = ({name, link}) => {
       name,
       link,
       handleCardClick: () => {
-        popupWithImage.setImageInfo({name, link});
-        popupWithImage.open();
+        popupWithImage.open({name, link});
       }
     },
     '.card-template'
