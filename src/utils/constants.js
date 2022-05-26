@@ -9,8 +9,7 @@ export const validParams = {
 export const apiOptions = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
   headers: {
-    authorization: 'e54fe21d-9764-47c4-b2ad-473d479b0a70',
-    'Content-Type': 'application/json'
+    authorization: 'e54fe21d-9764-47c4-b2ad-473d479b0a70'
   }
 };
 

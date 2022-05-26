@@ -5,11 +5,14 @@ export default class Api {
   }
 
   _sendRequest({resource, method, body = null, handler}) {
-    fetch(this._baseUrl + resource, {
-      headers: this._headers,
-      body: body ? JSON.stringify(body) : null,
-      method
-    })
+    const headers = Object.assign({}, this._headers);
+
+    if (body) {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(body);
+    }
+
+    fetch(this._baseUrl + resource, {headers, method, body})
       .then(res => {
         if (res.ok) {
           return res.json();
