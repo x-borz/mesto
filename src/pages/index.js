@@ -18,10 +18,10 @@ import Api from "../components/Api.js";
 
 const api = new Api(apiOptions);
 
-const addCard = ({_id, name, link}) => {
+const addCard = ({_id, name, link, owner}) => {
   api.addCard(
     {name, link},
-    ({_id, name, link}) => {
+    ({_id, name, link, owner}) => {
       const cardId = cardIdPrefix + _id;
       const card = new Card(
         {
@@ -33,7 +33,8 @@ const addCard = ({_id, name, link}) => {
           },
           handleDropClick: () => {
             popupWithConfirmation.open({cardId});
-          }
+          },
+          isDroppable: userInfo.getUserId() === owner._id
         },
         '.card-template'
       );
@@ -120,8 +121,9 @@ newPlaceButton.addEventListener('click', () => {
 api.getInitialCards(data => cardList.renderItems(data));
 
 // загружаем информацию о пользователе с сервера
-api.getUserInfo(({name, about, avatar}) => {
+api.getUserInfo(({_id, name, about, avatar}) => {
   userInfo.setUserInfo({
+    userId: _id,
     name,
     job: about
   });

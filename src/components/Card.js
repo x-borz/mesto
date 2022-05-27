@@ -1,11 +1,12 @@
 export default class Card {
-  constructor({cardId, name, link, handleCardClick, handleDropClick}, templateSelector) {
+  constructor({cardId, name, link, handleCardClick, handleDropClick, isDroppable}, templateSelector) {
     this._cardId = cardId;
     this._name = name;
     this._link = link;
     this._handleCardClick = handleCardClick;
     this._handleDropClick = handleDropClick;
     this._templateSelector = templateSelector;
+    this._isDroppable = isDroppable;
   }
 
   _getTemplate() {
@@ -49,6 +50,10 @@ export default class Card {
     const cardImage = this._element.querySelector('.element__img');
     cardImage.src = this._link;
     cardImage.alt = this._name;
+
+    if (!this._isDroppable) {
+      this._element.querySelector('.element__drop-button').classList.add('element__drop-button_hidden');
+    }
 
     return this._element;
   }
