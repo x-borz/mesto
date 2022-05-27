@@ -18,10 +18,10 @@ import Api from "../components/Api.js";
 
 const api = new Api(apiOptions);
 
-const addCard = ({_id, name, link, owner}) => {
+const addCard = ({name, link}) => {
   api.addCard(
     {name, link},
-    ({_id, name, link, owner}) => {
+    ({_id, name, link, owner, likes}) => {
       const cardId = cardIdPrefix + _id;
       const card = new Card(
         {
@@ -34,7 +34,8 @@ const addCard = ({_id, name, link, owner}) => {
           handleDropClick: () => {
             popupWithConfirmation.open({cardId});
           },
-          isDroppable: userInfo.getUserId() === owner._id
+          isDroppable: userInfo.getUserId() === owner._id,
+          likesCount: likes.length
         },
         '.card-template'
       );

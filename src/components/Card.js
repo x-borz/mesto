@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({cardId, name, link, handleCardClick, handleDropClick, isDroppable}, templateSelector) {
+  constructor({cardId, name, link, handleCardClick, handleDropClick, isDroppable, likesCount}, templateSelector) {
     this._cardId = cardId;
     this._name = name;
     this._link = link;
@@ -7,6 +7,7 @@ export default class Card {
     this._handleDropClick = handleDropClick;
     this._templateSelector = templateSelector;
     this._isDroppable = isDroppable;
+    this._likesCount = likesCount;
   }
 
   _getTemplate() {
@@ -54,6 +55,8 @@ export default class Card {
     if (!this._isDroppable) {
       this._element.querySelector('.element__drop-button').classList.add('element__drop-button_hidden');
     }
+
+    this._element.querySelector('.element__like-counter').textContent = this._likesCount;
 
     return this._element;
   }

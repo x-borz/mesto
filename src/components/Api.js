@@ -69,4 +69,20 @@ export default class Api {
       handler
     });
   }
+
+  addLike(id, handler) {
+    this._sendRequest({
+      resource: '/cards/' + id + '/likes',
+      method: 'PUT',
+      handler
+    });
+  }
+
+  removeLike(id, handler) {
+    this._sendRequest({
+      resource: '/cards/' + id + '/likes',
+      method: 'DELETE',
+      handler
+    });
+  }
 }
