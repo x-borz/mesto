@@ -35,7 +35,9 @@ const addCard = ({name, link}) => {
           handleRemoveLikeClick: handler => api.removeLike(_id, handler),
           isDroppable: userInfo.getUserId() === owner._id,
           likesCount: likes.length,
-          // isLiked: todo
+          isLiked: likes.some(like => {
+            return userInfo.getUserId() === like._id;
+          })
         },
         '.card-template'
       );
@@ -85,6 +87,12 @@ const popupWithConfirmation = new PopupWithConfirmation(
   },
   '.popup_type_confirmation'
 );
+const popupWithFormNewAvatar = new PopupWithForm(
+  {
+    handleFormSubmit: ({link}) => api.updateAvatar(link, data => userInfo.setAvatar(data.avatar))
+  },
+  '.popup_type_new-avatar'
+);
 
 const userInfo = new UserInfo(
   '.profile__name',
@@ -94,16 +102,19 @@ const userInfo = new UserInfo(
 
 const profileFormValidator = new FormValidator(validParams, '.popup__form_type_profile');
 const newPlaceFormValidator = new FormValidator(validParams, '.popup__form_type_new-place');
+const newAvatarFormValidator = new FormValidator(validParams, '.popup__form_type_new-avatar');
 
 // включаем обработку событий в попапах
 popupWithImage.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithFormNewPlace.setEventListeners();
 popupWithConfirmation.setEventListeners();
+popupWithFormNewAvatar.setEventListeners();
 
 // включаем валидацию форм
 profileFormValidator.enableValidation();
 newPlaceFormValidator.enableValidation();
+newAvatarFormValidator.enableValidation();
 
 // обрабатываем нажатие на кнопку редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -120,7 +131,8 @@ newPlaceButton.addEventListener('click', () => {
 
 // обрабатываем нажатие на кнопку редактирования аватара
 avatarUpdateButton.addEventListener('click', () => {
-  alert('hello world');
+  newAvatarFormValidator.clearErrors();
+  popupWithFormNewAvatar.open();
 });
 
 // загружаем начальные карточки

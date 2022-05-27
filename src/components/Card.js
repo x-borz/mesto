@@ -9,7 +9,8 @@ export default class Card {
       handleAddLikeClick,
       handleRemoveLikeClick,
       isDroppable,
-      likesCount
+      likesCount,
+      isLiked
     },
     templateSelector)
   {
@@ -23,6 +24,7 @@ export default class Card {
     this._templateSelector = templateSelector;
     this._isDroppable = isDroppable;
     this._likesCount = likesCount;
+    this._isLiked = isLiked;
   }
 
   _getTemplate() {
@@ -84,6 +86,10 @@ export default class Card {
     }
 
     this._element.querySelector('.element__like-counter').textContent = this._likesCount;
+
+    if (this._isLiked) {
+      this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
+    }
 
     return this._element;
   }

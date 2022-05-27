@@ -77,6 +77,18 @@
       </div>
     </section>
 
+    <section class="popup popup_type_new-avatar">
+      <div class="popup__container popup__container_content_form">
+        <button class="popup__close-button" type="button"></button>
+        <h2 class="popup__heading">Обновить аватар</h2>
+        <form class="popup__form popup__form_type_new-avatar" novalidate>
+          <input id="avatar-link" class="popup__input popup__input_el_image-link" type="url" placeholder="Ссылка на картинку" required name="link"/>
+          <span class="avatar-link-error popup__error"></span>
+          <button class="popup__submit-button" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </section>
+
     <section class="popup popup_type_image">
       <div class="popup__container popup__container_content_image">
         <button class="popup__close-button" type="button"></button>
