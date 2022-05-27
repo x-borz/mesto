@@ -61,4 +61,12 @@ export default class Api {
       handler
     });
   }
+
+  dropCard(id, handler) {
+    this._sendRequest({
+      resource: '/cards/' + id,
+      method: 'DELETE',
+      handler
+    });
+  }
 }

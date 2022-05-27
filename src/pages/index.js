@@ -5,7 +5,8 @@ import {
   validParams,
   apiOptions,
   profileEditButton,
-  newPlaceButton
+  newPlaceButton,
+  cardIdPrefix
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
@@ -17,19 +18,21 @@ import Api from "../components/Api.js";
 
 const api = new Api(apiOptions);
 
-const addCard = ({name, link}) => {
+const addCard = ({_id, name, link}) => {
   api.addCard(
     {name, link},
-    ({name, link}) => {
+    ({_id, name, link}) => {
+      const cardId = cardIdPrefix + _id;
       const card = new Card(
         {
+          cardId,
           name,
           link,
           handleCardClick: () => {
             popupWithImage.open({name, link});
           },
           handleDropClick: () => {
-            popupWithConfirmation.open();
+            popupWithConfirmation.open({cardId});
           }
         },
         '.card-template'
@@ -69,7 +72,14 @@ const popupWithFormNewPlace = new PopupWithForm(
 );
 const popupWithConfirmation = new PopupWithConfirmation(
   {
-    handleFormSubmit: () => alert(123)
+    handleFormSubmit: ({cardId}) => {
+      const id = cardId.replace(cardIdPrefix, '');
+      api.dropCard(id, data => {
+        let card = document.querySelector('.element#' + cardId);
+        card.remove();
+        card = null;
+      });
+    }
   },
   '.popup_type_confirmation'
 );
