@@ -28,12 +28,10 @@ const addCard = ({name, link}) => {
           cardId,
           name,
           link,
-          handleCardClick: () => {
-            popupWithImage.open({name, link});
-          },
-          handleDropClick: () => {
-            popupWithConfirmation.open({cardId});
-          },
+          handleCardClick: () => popupWithImage.open({name, link}),
+          handleDropClick: () => popupWithConfirmation.open({cardId}),
+          handleAddLikeClick: handler => api.addLike(_id, handler),
+          handleRemoveLikeClick: handler => api.removeLike(_id, handler),
           isDroppable: userInfo.getUserId() === owner._id,
           likesCount: likes.length
         },

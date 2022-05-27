@@ -1,10 +1,25 @@
 export default class Card {
-  constructor({cardId, name, link, handleCardClick, handleDropClick, isDroppable, likesCount}, templateSelector) {
+  constructor(
+    {
+      cardId,
+      name,
+      link,
+      handleCardClick,
+      handleDropClick,
+      handleAddLikeClick,
+      handleRemoveLikeClick,
+      isDroppable,
+      likesCount
+    },
+    templateSelector)
+  {
     this._cardId = cardId;
     this._name = name;
     this._link = link;
     this._handleCardClick = handleCardClick;
     this._handleDropClick = handleDropClick;
+    this._handleAddLikeClick = handleAddLikeClick;
+    this._handleRemoveLikeClick = handleRemoveLikeClick;
     this._templateSelector = templateSelector;
     this._isDroppable = isDroppable;
     this._likesCount = likesCount;
@@ -19,7 +34,19 @@ export default class Card {
   }
 
   _handleLikeClick() {
-    this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
+    const likeBtn = this._element.querySelector('.element__like-button');
+    const likeCounter = this._element.querySelector('.element__like-counter');
+    if (likeBtn.classList.contains('element__like-button_active')) {
+      this._handleRemoveLikeClick(data => {
+        likeBtn.classList.remove('element__like-button_active');
+        likeCounter.textContent = data.likes.length;
+      });
+    } else {
+      this._handleAddLikeClick(data => {
+        likeBtn.classList.add('element__like-button_active');
+        likeCounter.textContent = data.likes.length;
+      });
+    }
   }
 
   _setEventListeners() {
