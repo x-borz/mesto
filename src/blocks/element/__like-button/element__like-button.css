@@ -1,6 +1,7 @@
 .element__like-button {
-  grid-area: like;
+  grid-area: like-button;
   justify-self: center;
+  align-self: flex-end;
   width: 22px;
   height: 19px;
   border: none;

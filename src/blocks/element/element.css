@@ -7,8 +7,9 @@
   overflow: hidden;
   display: grid;
   grid-template-areas: "img img"
-                       "title like";
+                       "title like-button"
+                       "title like-counter";
   grid-template-columns: 220px auto;
-  grid-template-rows: 282px auto;
+  grid-template-rows: 282px auto auto;
   align-items: center;
 }
