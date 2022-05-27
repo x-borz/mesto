@@ -6,6 +6,7 @@ import {
   apiOptions,
   profileEditButton,
   newPlaceButton,
+  avatarUpdateButton,
   cardIdPrefix
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
@@ -33,7 +34,8 @@ const addCard = ({name, link}) => {
           handleAddLikeClick: handler => api.addLike(_id, handler),
           handleRemoveLikeClick: handler => api.removeLike(_id, handler),
           isDroppable: userInfo.getUserId() === owner._id,
-          likesCount: likes.length
+          likesCount: likes.length,
+          // isLiked: todo
         },
         '.card-template'
       );
@@ -114,6 +116,11 @@ profileEditButton.addEventListener('click', () => {
 newPlaceButton.addEventListener('click', () => {
   newPlaceFormValidator.clearErrors();
   popupWithFormNewPlace.open();
+});
+
+// обрабатываем нажатие на кнопку редактирования аватара
+avatarUpdateButton.addEventListener('click', () => {
+  alert('hello world');
 });
 
 // загружаем начальные карточки

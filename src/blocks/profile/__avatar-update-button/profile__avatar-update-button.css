@@ -1,0 +1,20 @@
+.profile__avatar-update-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  transition: background .2s linear;
+  cursor: pointer;
+}
+
+.profile__avatar-update-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+  background-image: url("../../../images/edit-icon.svg");
+  background-repeat: no-repeat;
+  background-size: 26px 26px;
+  background-position: center center;
+}

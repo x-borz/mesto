@@ -15,5 +15,6 @@ export const apiOptions = {
 
 export const profileEditButton = document.querySelector('.profile__button_type_edit');
 export const newPlaceButton = document.querySelector('.profile__button_type_add');
+export const avatarUpdateButton = document.querySelector('.profile__avatar-update-button');
 
 export const cardIdPrefix = 'card_';

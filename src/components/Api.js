@@ -85,4 +85,15 @@ export default class Api {
       handler
     });
   }
+
+  updateAvatar(link, handler) {
+    this._sendRequest({
+      resource: '/users/me/avatar',
+      method: 'PATCH',
+      body: {
+        avatar: link
+      },
+      handler
+    });
+  }
 }
