@@ -11,6 +11,7 @@ import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from '../components/PopupWithConfirmation.js';
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 
@@ -26,6 +27,9 @@ const addCard = ({name, link}) => {
           link,
           handleCardClick: () => {
             popupWithImage.open({name, link});
+          },
+          handleDropClick: () => {
+            popupWithConfirmation.open();
           }
         },
         '.card-template'
@@ -63,6 +67,12 @@ const popupWithFormNewPlace = new PopupWithForm(
   },
   '.popup_type_new-place'
 );
+const popupWithConfirmation = new PopupWithConfirmation(
+  {
+    handleFormSubmit: () => alert(123)
+  },
+  '.popup_type_confirmation'
+);
 
 const userInfo = new UserInfo(
   '.profile__name',
@@ -77,6 +87,7 @@ const newPlaceFormValidator = new FormValidator(validParams, '.popup__form_type_
 popupWithImage.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithFormNewPlace.setEventListeners();
+popupWithConfirmation.setEventListeners();
 
 // включаем валидацию форм
 profileFormValidator.enableValidation();
