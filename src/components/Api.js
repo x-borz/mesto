@@ -20,7 +20,6 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then(data => {
-        console.log(data);
         handler(data);
       })
       .catch(err => {
