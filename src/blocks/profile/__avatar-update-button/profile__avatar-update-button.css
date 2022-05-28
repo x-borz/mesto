@@ -12,7 +12,7 @@
 }
 
 .profile__avatar-update-button:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   background-image: url("../../../images/edit-icon.svg");
   background-repeat: no-repeat;
   background-size: 26px 26px;
