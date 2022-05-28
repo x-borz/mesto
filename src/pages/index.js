@@ -139,9 +139,6 @@ avatarUpdateButton.addEventListener('click', () => {
   popupWithFormNewAvatar.open();
 });
 
-// загружаем начальные карточки
-api.getInitialCards(data => cardList.renderItems(data));
-
 // загружаем информацию о пользователе с сервера
 api.getUserInfo(({_id, name, about, avatar}) => {
   userInfo.setUserInfo({
@@ -150,4 +147,7 @@ api.getUserInfo(({_id, name, about, avatar}) => {
   });
   userInfo.setUserId(_id)
   userInfo.setAvatar(avatar);
+
+  // загружаем начальные карточки
+  api.getInitialCards(data => cardList.renderItems(data));
 });
