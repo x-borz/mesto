@@ -19,7 +19,7 @@ import Api from "../components/Api.js";
 
 const api = new Api(apiOptions);
 
-const createCardElement = ({_id, name, link, owner, likes}) => {
+const renderCardElement = ({_id, name, link, owner, likes}) => {
   const cardId = cardIdPrefix + _id;
   const card = new Card(
     {
@@ -46,7 +46,7 @@ const createCardElement = ({_id, name, link, owner, likes}) => {
 
 const cardList = new Section(
   {
-    renderer: createCardElement
+    renderer: renderCardElement
   },
   '.elements'
 );
@@ -67,7 +67,7 @@ const popupWithFormProfile = new PopupWithForm(
 );
 const popupWithFormNewPlace = new PopupWithForm(
   {
-    handleFormSubmit: item => api.addCard(item, createCardElement)
+    handleFormSubmit: item => api.addCard(item, renderCardElement)
   },
   '.popup_type_new-place'
 );
