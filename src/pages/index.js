@@ -20,7 +20,7 @@ import Api from "../components/Api.js";
 const api = new Api(apiOptions);
 
 const addCard = ({name, link}) => {
-  api.addCard(
+  return api.addCard(
     {name, link},
     ({_id, name, link, owner, likes}) => {
       const cardId = cardIdPrefix + _id;
@@ -59,12 +59,14 @@ const cardList = new Section(
 const popupWithImage = new PopupWithImage('.popup_type_image');
 const popupWithFormProfile = new PopupWithForm(
   {
-    handleFormSubmit: ({name, job}) => api.updateUserInfo({
-        name,
-        about: job
-      },
-      ({name, about}) => userInfo.setUserInfo(({name, job: about}))
-    )
+    handleFormSubmit: ({name, job}) => {
+      return api.updateUserInfo({
+          name,
+          about: job
+        },
+        ({name, about}) => userInfo.setUserInfo(({name, job: about}))
+      )
+    }
   },
   '.popup_type_profile'
 );
@@ -78,7 +80,7 @@ const popupWithConfirmation = new PopupWithConfirmation(
   {
     handleFormSubmit: ({cardId}) => {
       const id = cardId.replace(cardIdPrefix, '');
-      api.dropCard(id, data => {
+      return api.dropCard(id, data => {
         let card = document.querySelector('.element#' + cardId);
         card.remove();
         card = null;
@@ -89,7 +91,9 @@ const popupWithConfirmation = new PopupWithConfirmation(
 );
 const popupWithFormNewAvatar = new PopupWithForm(
   {
-    handleFormSubmit: ({link}) => api.updateAvatar(link, data => userInfo.setAvatar(data.avatar))
+    handleFormSubmit: ({link}) => {
+      return api.updateAvatar(link, data => userInfo.setAvatar(data.avatar))
+    }
   },
   '.popup_type_new-avatar'
 );
@@ -141,9 +145,9 @@ api.getInitialCards(data => cardList.renderItems(data));
 // загружаем информацию о пользователе с сервера
 api.getUserInfo(({_id, name, about, avatar}) => {
   userInfo.setUserInfo({
-    userId: _id,
     name,
     job: about
   });
+  userInfo.setUserId(_id)
   userInfo.setAvatar(avatar);
 });

@@ -12,7 +12,7 @@ export default class Api {
       body = JSON.stringify(body);
     }
 
-    fetch(this._baseUrl + resource, {headers, method, body})
+    return fetch(this._baseUrl + resource, {headers, method, body})
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -29,7 +29,7 @@ export default class Api {
   }
 
   getUserInfo(handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/users/me',
       method: 'GET',
       handler
@@ -37,7 +37,7 @@ export default class Api {
   }
 
   getInitialCards(handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/cards',
       method: 'GET',
       handler
@@ -45,7 +45,7 @@ export default class Api {
   }
 
   updateUserInfo(body, handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/users/me',
       method: 'PATCH',
       body,
@@ -54,7 +54,7 @@ export default class Api {
   }
 
   addCard(body, handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/cards',
       method: 'POST',
       body,
@@ -63,7 +63,7 @@ export default class Api {
   }
 
   dropCard(id, handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/cards/' + id,
       method: 'DELETE',
       handler
@@ -71,7 +71,7 @@ export default class Api {
   }
 
   addLike(id, handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/cards/' + id + '/likes',
       method: 'PUT',
       handler
@@ -79,7 +79,7 @@ export default class Api {
   }
 
   removeLike(id, handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/cards/' + id + '/likes',
       method: 'DELETE',
       handler
@@ -87,7 +87,7 @@ export default class Api {
   }
 
   updateAvatar(link, handler) {
-    this._sendRequest({
+    return this._sendRequest({
       resource: '/users/me/avatar',
       method: 'PATCH',
       body: {
