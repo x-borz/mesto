@@ -19,39 +19,34 @@ import Api from "../components/Api.js";
 
 const api = new Api(apiOptions);
 
-const addCard = ({name, link}) => {
-  return api.addCard(
-    {name, link},
-    ({_id, name, link, owner, likes}) => {
-      const cardId = cardIdPrefix + _id;
-      const card = new Card(
-        {
-          cardId,
-          name,
-          link,
-          handleCardClick: () => popupWithImage.open({name, link}),
-          handleDropClick: () => popupWithConfirmation.open({cardId}),
-          handleAddLikeClick: handler => api.addLike(_id, handler),
-          handleRemoveLikeClick: handler => api.removeLike(_id, handler),
-          isDroppable: userInfo.getUserId() === owner._id,
-          likesCount: likes.length,
-          isLiked: likes.some(like => {
-            return userInfo.getUserId() === like._id;
-          })
-        },
-        '.card-template'
-      );
-
-      const cardElement = card.generateCard();
-
-      cardList.addItem(cardElement);
-    }
+const createCardElement = ({_id, name, link, owner, likes}) => {
+  const cardId = cardIdPrefix + _id;
+  const card = new Card(
+    {
+      cardId,
+      name,
+      link,
+      handleCardClick: () => popupWithImage.open({name, link}),
+      handleDropClick: () => popupWithConfirmation.open({cardId}),
+      handleAddLikeClick: handler => api.addLike(_id, handler),
+      handleRemoveLikeClick: handler => api.removeLike(_id, handler),
+      isDroppable: userInfo.getUserId() === owner._id,
+      likesCount: likes.length,
+      isLiked: likes.some(like => {
+        return userInfo.getUserId() === like._id;
+      })
+    },
+    '.card-template'
   );
+
+  const cardElement = card.generateCard();
+
+  cardList.addItem(cardElement);
 }
 
 const cardList = new Section(
   {
-    renderer: addCard
+    renderer: createCardElement
   },
   '.elements'
 );
@@ -72,7 +67,7 @@ const popupWithFormProfile = new PopupWithForm(
 );
 const popupWithFormNewPlace = new PopupWithForm(
   {
-    handleFormSubmit: addCard
+    handleFormSubmit: item => api.addCard(item, createCardElement)
   },
   '.popup_type_new-place'
 );
