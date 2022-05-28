@@ -1,4 +1,4 @@
-.popup__container_content_form {
+.popup__container_content_common {
   margin: 0 19px;
   padding: 34px 36px 37px 36px;
   box-sizing: border-box;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 635px) {
-  .popup__container_content_form {
+  .popup__container_content_common {
     padding: 25px 22px;
   }
 }

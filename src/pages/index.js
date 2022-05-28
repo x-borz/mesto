@@ -78,7 +78,7 @@ const popupWithFormNewPlace = new PopupWithForm(
 );
 const popupWithConfirmation = new PopupWithConfirmation(
   {
-    handleFormSubmit: ({cardId}) => {
+    handleConfirmClick: ({cardId}) => {
       const id = cardId.replace(cardIdPrefix, '');
       return api.dropCard(id, data => {
         let card = document.querySelector('.element#' + cardId);
