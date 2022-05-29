@@ -4,7 +4,7 @@ export default class Api {
     this._headers = headers;
   }
 
-  _sendRequest({resource, method, body = null, handler}) {
+  _sendRequest({resource, method, body = null}) {
     const headers = Object.assign({}, this._headers);
 
     if (body) {
@@ -18,81 +18,67 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then(data => {
-        handler(data);
-      })
-      .catch(err => {
-        console.log(err);
       });
   }
 
-  getUserInfo(handler) {
+  getUserInfo() {
     return this._sendRequest({
       resource: '/users/me',
-      method: 'GET',
-      handler
+      method: 'GET'
     });
   }
 
-  getInitialCards(handler) {
+  getInitialCards() {
     return this._sendRequest({
       resource: '/cards',
-      method: 'GET',
-      handler
+      method: 'GET'
     });
   }
 
-  updateUserInfo(body, handler) {
+  updateUserInfo(body) {
     return this._sendRequest({
       resource: '/users/me',
       method: 'PATCH',
-      body,
-      handler
+      body
     });
   }
 
-  addCard(body, handler) {
+  addCard(body) {
     return this._sendRequest({
       resource: '/cards',
       method: 'POST',
-      body,
-      handler
+      body
     });
   }
 
-  dropCard(id, handler) {
+  dropCard(id) {
     return this._sendRequest({
       resource: '/cards/' + id,
-      method: 'DELETE',
-      handler
+      method: 'DELETE'
     });
   }
 
-  addLike(id, handler) {
+  addLike(id) {
     return this._sendRequest({
       resource: '/cards/' + id + '/likes',
-      method: 'PUT',
-      handler
+      method: 'PUT'
     });
   }
 
-  removeLike(id, handler) {
+  removeLike(id) {
     return this._sendRequest({
       resource: '/cards/' + id + '/likes',
-      method: 'DELETE',
-      handler
+      method: 'DELETE'
     });
   }
 
-  updateAvatar(link, handler) {
+  updateAvatar(link) {
     return this._sendRequest({
       resource: '/users/me/avatar',
       method: 'PATCH',
       body: {
         avatar: link
-      },
-      handler
+      }
     });
   }
 }

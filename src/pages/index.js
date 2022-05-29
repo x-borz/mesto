@@ -55,12 +55,14 @@ const popupWithImage = new PopupWithImage('.popup_type_image');
 const popupWithFormProfile = new PopupWithForm(
   {
     handleFormSubmit: ({name, job}) => {
-      return api.updateUserInfo({
-          name,
-          about: job
-        },
-        ({_id, name, about, avatar}) => userInfo.setUserInfo({userId: _id, name, job: about, link: avatar})
-      )
+      return api.updateUserInfo({name, about: job})
+        .then(({_id, name, about, avatar}) => {
+          userInfo.setUserInfo({userId: _id, name, job: about, link: avatar});
+          popupWithFormProfile.close();
+        })
+        .finally(() => {
+          popupWithFormProfile.renderBusy(false);
+        });
     }
   },
   '.popup_type_profile'
@@ -137,10 +139,12 @@ avatarUpdateButton.addEventListener('click', () => {
   popupWithFormNewAvatar.open();
 });
 
-// загружаем информацию о пользователе с сервера
-api.getUserInfo(({_id, name, about, avatar}) => {
-  userInfo.setUserInfo({userId: _id, name, job: about, link: avatar});
-
-  // загружаем начальные карточки
-  api.getInitialCards(data => cardList.renderItems(data));
-});
+// загружаем информацию о пользователе и карточки с сервера
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo({userId: userData._id, name: userData.name, job: userData.about, link: userData.avatar})
+    cardList.renderItems(cards);
+  })
+  .catch(err => {
+    console.log(err);
+  });
