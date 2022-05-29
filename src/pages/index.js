@@ -55,21 +55,28 @@ const popupWithImage = new PopupWithImage('.popup_type_image');
 const popupWithFormProfile = new PopupWithForm(
   {
     handleFormSubmit: ({name, job}) => {
-      return api.updateUserInfo({name, about: job})
+      api.updateUserInfo({name, about: job})
         .then(({_id, name, about, avatar}) => {
           userInfo.setUserInfo({userId: _id, name, job: about, link: avatar});
           popupWithFormProfile.close();
         })
-        .finally(() => {
-          popupWithFormProfile.renderBusy(false);
-        });
+        .catch(err => console.log(err))
+        .finally(() => popupWithFormProfile.renderBusy(false));
     }
   },
   '.popup_type_profile'
 );
 const popupWithFormNewPlace = new PopupWithForm(
   {
-    handleFormSubmit: item => api.addCard(item, renderCardElement)
+    handleFormSubmit: item => {
+      api.addCard(item)
+        .then(data => {
+            renderCardElement(data);
+            popupWithFormNewPlace.close();
+        })
+        .catch(err => console.log(err))
+        .finally(() => popupWithFormNewPlace.renderBusy(false));
+    }
   },
   '.popup_type_new-place'
 );
@@ -77,11 +84,15 @@ const popupWithConfirmation = new PopupWithConfirmation(
   {
     handleConfirmClick: ({cardId}) => {
       const id = cardId.replace(cardIdPrefix, '');
-      return api.dropCard(id, data => {
-        let card = document.querySelector('.element#' + cardId);
-        card.remove();
-        card = null;
-      });
+      api.dropCard(id)
+        .then(data => {
+          let card = document.querySelector('.element#' + cardId);
+          card.remove();
+          card = null;
+          popupWithConfirmation.close();
+        })
+        .catch(err => console.log(err))
+        .finally(() => popupWithConfirmation.renderBusy(false));
     }
   },
   '.popup_type_confirmation'
@@ -145,6 +156,4 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userInfo.setUserInfo({userId: userData._id, name: userData.name, job: userData.about, link: userData.avatar})
     cardList.renderItems(cards);
   })
-  .catch(err => {
-    console.log(err);
-  });
+  .catch(err => console.log(err));

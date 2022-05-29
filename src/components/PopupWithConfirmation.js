@@ -5,6 +5,7 @@ export default class PopupWithConfirmation extends Popup {
     super(popupSelector);
     this._handleConfirmClick = handleConfirmClick;
     this._confirmButton = this._popup.querySelector('.popup__submit-button');
+    this._confirmButtonName = this._confirmButton.textContent;
   }
 
   setEventListeners() {
@@ -12,17 +13,21 @@ export default class PopupWithConfirmation extends Popup {
 
     this._confirmButton.addEventListener('click', evt => {
       evt.preventDefault();
-      this._confirmButton.textContent += '...';
-      this._handleConfirmClick(this._data)
-        .finally(() => {
-          this._confirmButton.textContent = this._confirmButton.textContent.slice(0, -3);
-          this.close();
-      });
+      this.renderBusy(true);
+      this._handleConfirmClick(this._data);
     });
   }
 
   open(data) {
     this._data = data;
     super.open();
+  }
+
+  renderBusy(isBusy) {
+    if (isBusy) {
+      this._confirmButton.textContent = 'Сохранение...';
+    } else {
+      this._confirmButton.textContent = this._confirmButtonName;
+    }
   }
 }
