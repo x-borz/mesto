@@ -28,8 +28,20 @@ const renderCardElement = ({_id, name, link, owner, likes}) => {
       link,
       handleCardClick: () => popupWithImage.open({name, link}),
       handleDropClick: () => popupWithConfirmation.open({cardId}),
-      handleAddLikeClick: handler => api.addLike(_id, handler),
-      handleRemoveLikeClick: handler => api.removeLike(_id, handler),
+      handleAddLikeClick: () => {
+        api.addLike(_id)
+          .then(({likes}) => {
+            card.addLike(likes.length);
+          })
+          .catch(err => console.log(err))
+      },
+      handleRemoveLikeClick: () => {
+        api.removeLike(_id)
+          .then(({likes}) => {
+            card.removeLike(likes.length);
+          })
+          .catch(err => console.log(err))
+      },
       isDroppable: userInfo.getUserId() === owner._id,
       likesCount: likes.length,
       isLiked: likes.some(like => {
