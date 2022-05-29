@@ -32,10 +32,7 @@ export default class PopupWithForm extends Popup {
   }
 
   setInputValues(values) {
-    for (const key in values) {
-      const input = this._formElement.querySelector('.popup__input[name=' + key + ']');
-      input.value = values[key];
-    }
+    this._inputList.forEach(input => input.value = values[input.name]);
   }
 
   renderBusy(isBusy) {
