@@ -59,7 +59,7 @@ const popupWithFormProfile = new PopupWithForm(
           name,
           about: job
         },
-        ({name, about}) => userInfo.setUserInfo(({name, job: about}))
+        ({_id, name, about, avatar}) => userInfo.setUserInfo({userId: _id, name, job: about, link: avatar})
       )
     }
   },
@@ -87,7 +87,10 @@ const popupWithConfirmation = new PopupWithConfirmation(
 const popupWithFormNewAvatar = new PopupWithForm(
   {
     handleFormSubmit: ({link}) => {
-      return api.updateAvatar(link, data => userInfo.setAvatar(data.avatar))
+      return api.updateAvatar(
+        link,
+        ({_id, name, about, avatar}) => userInfo.setUserInfo({userId: _id, name, job: about, link: avatar})
+      )
     }
   },
   '.popup_type_new-avatar'
@@ -136,12 +139,7 @@ avatarUpdateButton.addEventListener('click', () => {
 
 // загружаем информацию о пользователе с сервера
 api.getUserInfo(({_id, name, about, avatar}) => {
-  userInfo.setUserInfo({
-    name,
-    job: about
-  });
-  userInfo.setUserId(_id)
-  userInfo.setAvatar(avatar);
+  userInfo.setUserInfo({userId: _id, name, job: about, link: avatar});
 
   // загружаем начальные карточки
   api.getInitialCards(data => cardList.renderItems(data));
