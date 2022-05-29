@@ -112,10 +112,14 @@ const popupWithConfirmation = new PopupWithConfirmation(
 const popupWithFormNewAvatar = new PopupWithForm(
   {
     handleFormSubmit: ({link}) => {
-      return api.updateAvatar(
-        link,
-        ({_id, name, about, avatar}) => userInfo.setUserInfo({userId: _id, name, job: about, link: avatar})
+      api.updateAvatar(link)
+        .then(({_id, name, about, avatar}) => {
+          userInfo.setUserInfo({userId: _id, name, job: about, link: avatar});
+          popupWithFormNewAvatar.close();
+        }
       )
+      .catch(err => console.log(err))
+      .finally(() => popupWithFormNewAvatar.renderBusy(false));
     }
   },
   '.popup_type_new-avatar'
