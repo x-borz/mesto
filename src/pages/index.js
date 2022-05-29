@@ -118,19 +118,19 @@ newAvatarFormValidator.enableValidation();
 // обрабатываем нажатие на кнопку редактирования профиля
 profileEditButton.addEventListener('click', () => {
   popupWithFormProfile.setInputValues(userInfo.getUserInfo());
-  profileFormValidator.clearErrors();
+  profileFormValidator.resetValidation();
   popupWithFormProfile.open();
 });
 
 // обрабатываем нажатие на кнопку добавления нового места
 newPlaceButton.addEventListener('click', () => {
-  newPlaceFormValidator.clearErrors();
+  newPlaceFormValidator.resetValidation();
   popupWithFormNewPlace.open();
 });
 
 // обрабатываем нажатие на кнопку редактирования аватара
 avatarUpdateButton.addEventListener('click', () => {
-  newAvatarFormValidator.clearErrors();
+  newAvatarFormValidator.resetValidation();
   popupWithFormNewAvatar.open();
 });
 
