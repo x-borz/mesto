@@ -131,9 +131,16 @@ const userInfo = new UserInfo(
   '.profile__avatar'
 );
 
-const profileFormValidator = new FormValidator(validParams, '.popup__form_type_profile');
-const newPlaceFormValidator = new FormValidator(validParams, '.popup__form_type_new-place');
-const newAvatarFormValidator = new FormValidator(validParams, '.popup__form_type_new-avatar');
+const formValidators = {};
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'))
+  formList.forEach(formElement => {
+    const validator = new FormValidator(validParams, formElement)
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+}
 
 // включаем обработку событий в попапах
 popupWithImage.setEventListeners();
@@ -142,27 +149,25 @@ popupWithFormNewPlace.setEventListeners();
 popupWithConfirmation.setEventListeners();
 popupWithFormNewAvatar.setEventListeners();
 
-// включаем валидацию форм
-profileFormValidator.enableValidation();
-newPlaceFormValidator.enableValidation();
-newAvatarFormValidator.enableValidation();
+// создаем экземпляры класса FormValidator для всех форм и включаем валидацию
+enableValidation();
 
 // обрабатываем нажатие на кнопку редактирования профиля
 profileEditButton.addEventListener('click', () => {
   popupWithFormProfile.setInputValues(userInfo.getUserInfo());
-  profileFormValidator.resetValidation();
+  formValidators['profile'].resetValidation();
   popupWithFormProfile.open();
 });
 
 // обрабатываем нажатие на кнопку добавления нового места
 newPlaceButton.addEventListener('click', () => {
-  newPlaceFormValidator.resetValidation();
+  formValidators['new-place'].resetValidation();
   popupWithFormNewPlace.open();
 });
 
 // обрабатываем нажатие на кнопку редактирования аватара
 avatarUpdateButton.addEventListener('click', () => {
-  newAvatarFormValidator.resetValidation();
+  formValidators['new-avatar'].resetValidation();
   popupWithFormNewAvatar.open();
 });
 
