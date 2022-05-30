@@ -174,7 +174,7 @@ avatarUpdateButton.addEventListener('click', () => {
 // загружаем информацию о пользователе и карточки с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
-    userInfo.setUserInfo({userId: userData._id, name: userData.name, job: userData.about, link: userData.avatar})
+    userInfo.setUserInfo({userId: userData._id, name: userData.name, job: userData.about, link: userData.avatar});
     cardList.renderItems(cards);
   })
   .catch(err => console.log(err));

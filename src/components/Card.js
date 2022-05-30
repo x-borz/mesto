@@ -54,7 +54,7 @@ export default class Card {
       () => this._handleDropClick()
     );
 
-    this._element.querySelector('.element__img').addEventListener(
+    this._cardImage.addEventListener(
       'click',
       () => this._handleCardClick()
     );
