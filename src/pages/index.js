@@ -19,7 +19,7 @@ import Api from "../components/Api.js";
 
 const api = new Api(apiOptions);
 
-const renderCardElement = ({_id, name, link, owner, likes}) => {
+const createCard = ({_id, name, link, owner, likes}) => {
   const cardId = cardIdPrefix + _id;
   const card = new Card(
     {
@@ -50,15 +50,12 @@ const renderCardElement = ({_id, name, link, owner, likes}) => {
     },
     '.card-template'
   );
-
-  const cardElement = card.generateCard();
-
-  cardList.addItem(cardElement);
+  return card;
 }
 
 const cardList = new Section(
   {
-    renderer: renderCardElement
+    renderer: card => card.generateCard()
   },
   '.elements'
 );
@@ -83,8 +80,8 @@ const popupWithFormNewPlace = new PopupWithForm(
     handleFormSubmit: item => {
       api.addCard(item)
         .then(data => {
-            renderCardElement(data);
-            popupWithFormNewPlace.close();
+          cardList.addItem(createCard(data));
+          popupWithFormNewPlace.close();
         })
         .catch(err => console.log(err))
         .finally(() => popupWithFormNewPlace.renderBusy(false));
@@ -175,6 +172,6 @@ avatarUpdateButton.addEventListener('click', () => {
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo({userId: userData._id, name: userData.name, job: userData.about, link: userData.avatar});
-    cardList.renderItems(cards);
+    cards.reverse().forEach(item => cardList.addItem(createCard(item)));
   })
   .catch(err => console.log(err));

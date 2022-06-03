@@ -4,11 +4,7 @@ export default class Section {
     this._renderer = renderer;
   }
 
-  renderItems(items) {
-    items.reverse().forEach(item => this._renderer(item));
-  }
-
-  addItem(cardElement) {
-    this._container.prepend(cardElement);
+  addItem(item) {
+    this._container.prepend(this._renderer(item));
   }
 }
