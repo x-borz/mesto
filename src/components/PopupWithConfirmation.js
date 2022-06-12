@@ -11,8 +11,7 @@ export default class PopupWithConfirmation extends Popup {
   setEventListeners() {
     super.setEventListeners();
 
-    this._confirmButton.addEventListener('click', evt => {
-      evt.preventDefault();
+    this._confirmButton.addEventListener('click', () => {
       this.renderBusy(true);
       this._handleConfirmClick(this._data);
     });
@@ -24,10 +23,6 @@ export default class PopupWithConfirmation extends Popup {
   }
 
   renderBusy(isBusy) {
-    if (isBusy) {
-      this._confirmButton.textContent = 'Сохранение...';
-    } else {
-      this._confirmButton.textContent = this._confirmButtonName;
-    }
+    this._confirmButton.textContent = isBusy? 'Сохранение...' : this._confirmButtonName;
   }
 }

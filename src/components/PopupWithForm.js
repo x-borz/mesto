@@ -36,10 +36,6 @@ export default class PopupWithForm extends Popup {
   }
 
   renderBusy(isBusy) {
-    if (isBusy) {
-      this._submitButton.textContent = 'Сохранение...';
-    } else {
-      this._submitButton.textContent = this._submitButtonName;
-    }
+    this._submitButton.textContent = isBusy? 'Сохранение...' : this._submitButtonName;
   }
 }

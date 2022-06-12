@@ -12,7 +12,8 @@ export default class Card {
       likesCount,
       isLiked
     },
-    templateSelector)
+    templateSelector
+  )
   {
     this._cardId = cardId;
     this._name = name;
@@ -44,20 +45,9 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._likeButton.addEventListener(
-      'click',
-      () => this._handleLikeClick()
-    );
-
-    this._dropButton.addEventListener(
-      'click',
-      () => this._handleDropClick()
-    );
-
-    this._cardImage.addEventListener(
-      'click',
-      () => this._handleCardClick()
-    );
+    this._likeButton.addEventListener('click', () => this._handleLikeClick());
+    this._dropButton.addEventListener('click', () => this._handleDropClick());
+    this._cardImage.addEventListener('click', () => this._handleCardClick());
   }
 
   generateCard() {
